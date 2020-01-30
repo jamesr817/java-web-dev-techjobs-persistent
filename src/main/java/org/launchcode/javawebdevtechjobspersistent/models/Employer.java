@@ -9,7 +9,7 @@ import javax.validation.constraints.Size;
 public class Employer extends AbstractEntity {
 
     @NotBlank(message = "Please provide Job location.")
-    @Size(min = 10, max = 255, message = "Location must be only 10-255 characters.  Please try again.")
+    @Size(max = 255, message = "Location must be only 10-255 characters.  Please try again.")
     private String location;
 
     public Employer(String location) {

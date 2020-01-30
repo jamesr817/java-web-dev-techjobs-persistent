@@ -28,12 +28,12 @@ public class SkillController {
     public String processAddSkillForm(@ModelAttribute @Valid Skill newSkill,
                                          Errors errors, Model model) {
         if (errors.hasErrors()) {
-            //model.addAttribute("name", newSkill);
-            //model.addAttribute("description", newSkill);
+            model.addAttribute("skill", newSkill);
             return "skills/add";
         }
+        model.addAttribute("skill", newSkill);
         skillRepository.save(newSkill);
-        return "redirect:";
+        return "redirect:view";
     }
 
     @GetMapping("view/{skillId}")
@@ -47,5 +47,12 @@ public class SkillController {
         } else {
             return "redirect:../";
         }
+    }
+
+    @GetMapping("view")
+    public String displayAddSkill(Model model) {
+        model.addAttribute("title", "All Skills");
+        model.addAttribute("skills", skillRepository.findAll());
+        return "skills/index";
     }
 }

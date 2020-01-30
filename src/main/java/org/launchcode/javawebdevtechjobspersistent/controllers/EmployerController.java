@@ -30,11 +30,12 @@ public class EmployerController {
                                     Errors errors, Model model) {
 
         if (errors.hasErrors()) {
-
+//            model.addAttribute("employer", newEmployer);
             return "employers/add";
         }
+//        model.addAttribute("employer", newEmployer);
         employerRepository.save(newEmployer);
-        return "redirect:";
+        return "redirect:view";
     }
 
     @GetMapping("view/{employerId}")
@@ -48,5 +49,12 @@ public class EmployerController {
         } else {
             return "redirect:../";
         }
+    }
+
+    @GetMapping("view")
+    public String displayAddEmployers(Model model) {
+        model.addAttribute("title", "All Employers");
+        model.addAttribute("employers", employerRepository.findAll());
+        return "employers/index";
     }
 }
