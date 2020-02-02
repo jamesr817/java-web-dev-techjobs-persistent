@@ -3,6 +3,7 @@ package org.launchcode.javawebdevtechjobspersistent.models;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,6 +12,7 @@ import java.util.List;
 public class Skill extends AbstractEntity {
 
     @Size(max = 1000, message = "Description cannot exceed 1000 characters.")
+    @NotBlank(message = "Skill description required. Please try again.")
     private String description;
 
     @ManyToMany(mappedBy = "skills")
