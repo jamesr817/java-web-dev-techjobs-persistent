@@ -26,15 +26,17 @@ public class HomeController {
     private EmployerRepository employerRepository;
 
     @Autowired
-    private SkillRepository skillRepository;
+    private JobRepository jobRepository;
 
     @Autowired
-    private JobRepository jobRepository;
+    private SkillRepository skillRepository;
 
     @RequestMapping("")
     public String index(Model model) {
+
         model.addAttribute("title", "My Jobs");
         model.addAttribute("jobs", jobRepository.findAll());
+
         return "index";
     }
 
@@ -48,12 +50,13 @@ public class HomeController {
     }
 
     @PostMapping("add")
-    public String processAddJobForm(@ModelAttribute @Valid Job newJob,
-                                    Errors errors, Model model, @RequestParam int employerId, @RequestParam
-                                                List<Integer> skills) {
+    public String processAddJobForm(@ModelAttribute Job newJob,
+                                    Errors errors, Model model, @RequestParam int employerId, @RequestParam List<Integer> skills){
+
         if (errors.hasErrors()) {
             model.addAttribute("title", "Add Job");
             return "add";
+
         }
         Optional<Employer> employerOptional = employerRepository.findById(employerId);
         Employer employer = employerOptional.get();
@@ -61,20 +64,20 @@ public class HomeController {
 
         List<Skill> skillObjs = (List<Skill>) skillRepository.findAllById(skills);
         newJob.setSkills(skillObjs);
+
         jobRepository.save(newJob);
         return "redirect:";
     }
 
     @GetMapping("view/{jobId}")
-    public String displayViewJob(Model model, @PathVariable int jobId) {
-        Optional optJob = jobRepository.findById(jobId);
+    public String displayViewJob(Model model, @PathVariable int jobId){
+        Optional optJob = jobRepository.findById(jobId);;
         if (optJob.isPresent()) {
             Job job = (Job) optJob.get();
             model.addAttribute("job", job);
             return "view";
         } else {
-            return "redirect../";
+            return "redirect:../";
         }
     }
-
 }
