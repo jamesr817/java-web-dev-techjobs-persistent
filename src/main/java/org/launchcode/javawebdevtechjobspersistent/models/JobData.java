@@ -22,7 +22,6 @@ public class JobData {
      * @return List of all jobs matching the criteria.
      */
     public static ArrayList<Job> findByColumnAndValue(String column, String value, Iterable<Job> allJobs) {
-
         ArrayList<Job> results = new ArrayList<>();
 
         if (value.toLowerCase().equals("all")){
@@ -43,6 +42,7 @@ public class JobData {
         }
 
         return results;
+
     }
 
     public static String getFieldValue(Job job, String fieldName){
@@ -52,7 +52,7 @@ public class JobData {
         } else if (fieldName.equals("employer")){
             theValue = job.getEmployer().toString();
         } else {
-            theValue = job.toString();
+            theValue = job.getSkills().toString();
         }
 
         return theValue;
@@ -67,26 +67,18 @@ public class JobData {
      */
     public static ArrayList<Job> findByValue(String value, Iterable<Job> allJobs) {
 
-
         ArrayList<Job> results = new ArrayList<>();
-
         for (Job job : allJobs) {
-
             if (job.getName().toLowerCase().contains(value.toLowerCase())) {
                 results.add(job);
-            } else if (job.getEmployer().toLowerCase().contains(value.toLowerCase())) {
+            } else if (job.getEmployer().toString().toLowerCase().contains(value.toLowerCase())) {
                 results.add(job);
-            } else if (job.getSkills().contains(value.toLowerCase())) {
+            } else if (job.getSkills().toString().toLowerCase().contains(value.toLowerCase())) {
                 results.add(job);
             } else if (job.toString().toLowerCase().contains(value.toLowerCase())) {
                 results.add(job);
             }
-
         }
-
         return results;
     }
-
-
 }
-
